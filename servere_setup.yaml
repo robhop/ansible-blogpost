@@ -10,37 +10,17 @@
 
 - hosts: webserver
   tasks:
-  - name: Install docker key
-    become: true
-    apt_key:
-      url: https://download.docker.com/linux/ubuntu/gpg
-      state: present
-  - name: Install docker repo
-    become: true
-    apt_repository:
-      repo: deb https://download.docker.com/linux/ubuntu xenial stable
-      state: present
-  - name: Install docker
-    become: true
-    apt:
-      update_cache: true
-      name: docker-ce
-      state: present 
   - name: Install pip
     become: true
     apt:
       name: python-pip
       state: present
-  - name: Install docker.py
+  - name: Install flask
     become: true
     pip:
-      name: docker-py
-  - name: Pull docker for httpbin
+      name: flask
+  - name: Install gunicorn
     become: true
-    docker_container:
-      name: httpbin
-      image: "kennethreitz/httpbin"
-      pull: true
-      state: started
-      ports:
-       - "80:80"
+    pip:
+      name: gunicorn      
+

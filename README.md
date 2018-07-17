@@ -6,7 +6,7 @@ Ansible installeres på en kontrollmaskin og denne brukes til å administrere an
 
 Jeg vil i denne demoen vise hvordan Ansibl kan brukes til å konfigurere to servere fra en kontrollmaskin. Jeg valgte å kjøre 3 Ubuntu 16.04 installasjoner i Virtual box, alle med en bruker som heter robert og ssh server på standard port 22.
  
-##Installasjon
+## Installasjon
 
 ### Kontrollmaskin
 
@@ -39,11 +39,11 @@ Finnes nøkkelen fra før får du beskjed om det, så kopierer du nøkkelen til 
 	$ ssh-copy-id robert@10.0.2.4
 	$ ssh-copy-id robert@10.0.2.5
 
-Nå kan ansible logge på maskine den skal fjernstyre med brukeren robert, uten å skrive inn passord.
+Nå kan ansible logge på maskine den skal fjernstyre med brukeren robert, uten å måtte skrive inn noe passord.
 
 ## Vårt første ansible program
 
-Ansible består av en rekke kommandolinje program, det enkelste heter **ansible** og kan brukes til å kjøre enkele kommandoer på en eller flere maskiner.
+Ansible består av en rekke kommandolinje-program, det enkelste heter **ansible** og kan brukes til å kjøre enkele kommandoer på en eller flere maskiner.
 
 Kommandostrukturen for ansible er
 
@@ -64,13 +64,13 @@ Ping localhost og se om den svarer:
 
 ### Inventar
 
-Først litt husarbeid, Ansible leter etter konfigurasjonsfiler i gjeldende mappe og derfor er det greit å lage en egen mappe til demo prosjektet.
+Først litt husarbeid, Ansible leter etter konfigurasjonsfiler i gjeldende mappe og det er derfor lurt å lage en egen mappe til demoprosjektet.
 	
 	$ mkdir ansible-demo
 	$ cd ansible-demo/
 
 
-Så definerer vi vår infrastruktur eller «inventory» som det kalles. Vi kan gjøre dette i en fil som vi kaller for hosts, vi kan brukre ini-fil struktur eller YAML, her er et eksempel som bruker ini-fil struktur. Lagre følgende text i en fil som heter hosts.
+Så definerer vi vår infrastruktur eller «inventory» som det kalles. Det kan gjøres i en fil som vi kaller for hosts. Vi kan brukre ini-fil struktur eller YAML, her er et eksempel som bruker ini-fil struktur.
 
 	[servere]
 	server1 ansible_host=10.0.2.4
@@ -78,7 +78,7 @@ Så definerer vi vår infrastruktur eller «inventory» som det kalles. Vi kan g
 
 Her definerer vi en gruppe som vi kaller *servere* hvor våre to maskiner er medlemmer, vi oppgir også ip addressen til maskinen i hosts-variabelen *ansible_host*.
 
-Vi forteller ansible at inventaret vårt finnes i filen hosts ved å bruke `-i` opsjonen, og bruker `<host-pattern>` `servere` for å kjøre modulen `ping` på alle server i gruppen `servere`
+Vi forteller ansible at inventaret vårt finnes i filen hosts ved å bruke `-i` opsjonen, og bruker `<host-pattern>` `servere` for å kjøre ansible-modulen `ping`. Ansible vil da pinge alle server i gruppen `servere`.
 
 	$ ansible servere -i hosts -m ping
 	server2 | SUCCESS => {
