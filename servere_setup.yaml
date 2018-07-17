@@ -42,3 +42,8 @@
     apt:
       name: nginx
       state: present
+  - name: Proxy pass to webserver
+    lineinfile:
+      path: /etc/nginx/sites-available/default
+      insertafter: '\tlocation / {'
+      line: '\t\tproxy_pass http://10.0.2.4:8000;'
