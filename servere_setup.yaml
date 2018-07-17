@@ -1,4 +1,6 @@
 ---
+
+# All servers is to run ntp
 - hosts: servere
   tasks:
   - name: Install ntp deamon
@@ -8,6 +10,7 @@
       name: ntp
       state: present
 
+# Install from github and serve our small
 - hosts: webserver
   become: true
   tasks:
@@ -25,10 +28,17 @@
     git:
       repo: https://github.com/robhop/ansible-blogpost.git
       dest: /usr/local/ansible_blogpost
-
   - name: Start app with gunicorn with a config file
     gunicorn:
       app: 'flask_app:app'
       chdir: '/usr/local/ansible_blogpost/flask_app'
       conf: '/usr/local/ansible_blogpost/flask_app/config.cfg' 
 
+# Install ningx and serve the app from the webservers
+- hosts: proxyserver
+  become: true
+  tasks:
+  - name: Install nginx
+    apt:
+      name: nginx
+      state: present
