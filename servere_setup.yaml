@@ -28,7 +28,7 @@
 
   - name: Start app with gunicorn with a config file
     gunicorn:
-      app: 'app'
+      app: 'flask_app:app'
       chdir: '/usr/local/ansible_blogpost/flask_app'
-      conf: '/usr/local/ansible_blogpost/flask_app/gunicorn.cfg' 
+      conf: '/usr/local/ansible_blogpost/flask_app/config.cfg' 
 
