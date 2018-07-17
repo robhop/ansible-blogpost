@@ -9,18 +9,26 @@
       state: present
 
 - hosts: webserver
+  become: true
   tasks:
   - name: Install pip
-    become: true
     apt:
       name: python-pip
       state: present
   - name: Install flask
-    become: true
     pip:
       name: flask
   - name: Install gunicorn
-    become: true
     pip:
-      name: gunicorn      
+      name: gunicorn
+  - name: Checkout git repo
+    git:
+      repo: https://github.com/robhop/ansible-blogpost.git
+      dest: /usr/local/ansible_blogpost
+
+  - name: Start app with gunicorn with a config file
+    gunicorn:
+      app: 'app'
+      chdir: '/usr/local/ansible_blogpost/flask_app'
+      conf: '/usr/local/ansible_blogpost/flask_app/gunicorn.cfg' 
 
