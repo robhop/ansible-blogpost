@@ -45,5 +45,10 @@
   - name: Proxy pass to webserver
     lineinfile:
       path: /etc/nginx/sites-available/default
-      insertafter: '\tlocation / {'
-      line: '\t\tproxy_pass http://10.0.2.4:8000;'
+      insertafter: '^\t+location / {'
+      line: '		proxy_pass http://10.0.2.4:8000;'
+  - name: Reload nginx config
+    systemd:
+      name: nginx
+      state: reloaded
+
