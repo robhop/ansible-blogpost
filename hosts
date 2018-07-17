@@ -1,0 +1,9 @@
+[servere]
+server1 ansible_host=10.0.2.4
+server2 ansible_host=10.0.2.5
+
+[webserver]
+server1
+
+[proxyserver]
+server2

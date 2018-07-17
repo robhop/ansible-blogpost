@@ -1,0 +1,10 @@
+---
+- hosts: servere
+  tasks:
+  - name: Install ntp deamon
+    become: true
+    apt:
+      update_cache: true
+      name: ntp
+      state: present
+
